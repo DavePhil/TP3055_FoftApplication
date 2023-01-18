@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -28,5 +29,8 @@ public class UniteEnseignementService {
     public UniteEnseignement saveUniteEnseignement(UniteEnseignement uniteEnseignement){
         UniteEnseignement savedUniteEnseigment =uniteEnseignementRepository.save(uniteEnseignement);
         return savedUniteEnseigment;
+    }
+    public List<UniteEnseignement> getCodeUniteEnseignement(){
+        return uniteEnseignementRepository.getCodeUniteEnseignement();
     }
 }

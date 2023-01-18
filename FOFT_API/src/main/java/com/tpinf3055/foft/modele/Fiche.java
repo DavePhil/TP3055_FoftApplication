@@ -19,16 +19,22 @@ public class Fiche {
     private LocalDate date;
     private int heureDeDebut;
     private int heureDeFin;
-    private int totalHoraire = heureDeFin - heureDeFin;
+    private int totalHoraire;
     private String contenu;
+    private String motif;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    private String signature;
+    private String signatureDelegue;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String signatureEnseignant;
     private int state; // 0 en cours de validation; 1 echec; 2 validé
 
+    @ManyToOne
+    private Enseignant enseignant;
 
-
-
+    @ManyToOne
+    private UniteEnseignement ue;
 
 
     public Fiche() {

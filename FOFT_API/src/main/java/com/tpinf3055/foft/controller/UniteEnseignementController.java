@@ -5,6 +5,7 @@ import com.tpinf3055.foft.service.UniteEnseignementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,11 +34,14 @@ public class UniteEnseignementController {
     }
 
     @DeleteMapping("/UniteEnseignement/{id}")
-    @GetMapping("/UniteEnseignement/{id}")
     public void deleteUniteEnseignement(@PathVariable("id") final Integer id) {
         uniteEnseignementService.deleteUniteEnseignement(id);
     }
 
+    @GetMapping("/getCodeUniteEnseignement")
+    public List<UniteEnseignement> getCodeUniteEnseignement(){
+        return uniteEnseignementService.getCodeUniteEnseignement();
+    }
 
 
 

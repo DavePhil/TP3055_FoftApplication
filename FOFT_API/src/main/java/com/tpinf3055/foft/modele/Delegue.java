@@ -16,7 +16,7 @@ public class Delegue {
     private String nom;
     private String email;
     private String matricule;
-    private String motDePasse;
+    private String password;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String photo;
@@ -25,7 +25,8 @@ public class Delegue {
     @JoinColumn(name = "delegue_id", referencedColumnName = "id")
     private Set<Fiche> fiche;
 
-
-
-
+    public Delegue() {
+        super();
+        password = "1234";
+    }
 }
