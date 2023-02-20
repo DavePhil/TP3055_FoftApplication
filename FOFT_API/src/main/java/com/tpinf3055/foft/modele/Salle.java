@@ -15,18 +15,6 @@ public class Salle {
     private Integer id;
     private String nom;
 
-    @OneToMany
-    @JoinColumn(name = "salle_id", referencedColumnName = "id")
-    private Set<UniteEnseignement> uE ;
-
-
-
-    public Salle(Integer id, String nom, Set<UniteEnseignement> uE) {
-        super();
-        this.id = id;
-        this.nom = nom;
-        this.uE = uE;
-    }
 
     public Salle() {
         super();

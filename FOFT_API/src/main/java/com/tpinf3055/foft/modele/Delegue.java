@@ -16,16 +16,14 @@ public class Delegue {
     private String nom;
     private String email;
     private String matricule;
-    private String motDePasse;
-    @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    private String password;
+    @ManyToOne
+    private Niveau niveau;
     private String photo;
-    private String niveau;
-    @OneToMany
-    @JoinColumn(name = "delegue_id", referencedColumnName = "id")
-    private Set<Fiche> fiche;
 
 
-
-
+    public Delegue() {
+        super();
+        password = "1234";
+    }
 }

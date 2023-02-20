@@ -18,9 +18,7 @@ public class Admin {
 
         private String nom;
         private String email;
-        private String motDePasse;
-        @Lob
-        @Column(columnDefinition = "MEDIUMBLOB")
+        private String password;
         private String photo;
 
 
@@ -34,6 +32,9 @@ public class Admin {
         @OneToMany
         @JoinColumn(name = "admin_id", referencedColumnName = "id")
         private Set<Salle> salles ;
+        @OneToMany
+        @JoinColumn(name = "admin_id", referencedColumnName = "id")
+        private Set<UniteEnseignement> Ue ;
 
 
 

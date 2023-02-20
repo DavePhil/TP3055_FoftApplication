@@ -3,6 +3,8 @@ package com.tpinf3055.foft.modele;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -15,9 +17,15 @@ public class UniteEnseignement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String code;
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "UniteEnseignement_id", referencedColumnName = "id")
-    private List<Fiche> fiche;
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    private Semestre semestre;
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    private Niveau niveau;
+//    @OneToMany(cascade = CascadeType.REMOVE)
+//    @JoinColumn(name = "UniteEnseignement_id", referencedColumnName = "id")
+//    private List<Fiche> fiche;
 
 
 }

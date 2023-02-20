@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles_etudiant.css">
+    <script src="js/script.js" defer></script>
+    <title>etudiant</title>
+</head>
+<body>
+<div class="side-menu">
+    <div class="brand-name">
+        <h1>Admin</h1>
+
+    </div>
+    <ul>      <ul>     <li><a href="HomePage"><img src="img/dashboard (2).png" alt="">&nbsp; <span>Dashboard</span> </a></li>
+        <li><a href="ListDelegue" class="etudiant"><img src="img/reading-book (1).png" alt="">&nbsp; <span>Etudiants</span> </a></li>
+        <li><a href="ListEnseignant"><img src="img/teacher2.png" alt="">&nbsp; <span>Enseignants</span></a></li>
+        <li><a href="ListNiveau"><img src="img/school.png" alt="">&nbsp; <span>Niveau</span> </a></li>
+        <li><a href="ListSalle"><img src="img/payment.png" alt="">&nbsp; <span>Salle</span> </a></li>
+        <li><a href="ListUE"><img src="img/help-web-button.png" alt="">&nbsp; <span>UE</span></a> </li>
+        <li><a href="ListSpecialite"><img src="img/settings.png" alt="">&nbsp; <span>Specialite</span> </a></li>
+    </ul>
+    </ul>
+</div>
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="user">
+                <button href="" class="btn" id="pop">Ajouter Delegue</button>
+                <a href="/" alt=""><h3>deconnexion</h3></a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="cards">
+            <div class="card">
+                <div class="box">
+                    <h1>
+                        [[${delCount}]]
+                    </h1>
+                    <h3>Delegue</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/students.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1> [[${ensCount}]]</h1>
+                    <h3>Enseignants</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/teachers.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1>1</h1>
+                    <h3>Départements</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/schools.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1>[[${ficheCount}]]</h1>
+                    <h3>Fiches</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/income.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="content-2">
+            <div class="recent-payments">
+                <div class="title">
+                    <h2>Etudiants</h2>
+                    <a href="#" class="btn">Voir Plus</a>
+                </div>
+                <table class="events-table">
+                    <thead>
+                    <tr>
+                        <th class="event-date">Id</th>
+                         <th class="event-date">Photo</th>
+                        <th class="event-date">Email</th>
+                        <th class="event-date">Matricule</th>
+                        <th class="event-date">Niveau</th>
+                        <th class="event-date">Nom</th>
+                        <th class="event-date">Mot de passe</th>
+<!--                        <th class="event-date">Modifier</th>-->
+                        <th class="event-date">Supprimer</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="del : ${dels}">
+
+                        <td data-label="Id">[[*{del.id}]]</td>
+                        <td data-label="Photo"><img alt="" th:src="@{${del.photo}}" style="width: 100px;height: 100px;"></td>
+                        <td data-label="Email">[[*{del.email}]]</td>
+                        <td data-label="Matricule">[[*{del.matricule}]]</td>
+                        <td data-label="Niveau">[[*{del.niveau.intitule}]]</td>
+                        <td data-label="Nom">[[*{del.nom}]]</td>
+                        <td data-label="Mot de passe">[[*{del.password}]]</td>
+<!--                        <td data-label="Modifier"><a th:href="@{/changedelegueGet/{id}(id=${del.id})}"><img src="img/icons8-crayon-50.png" alt=""></a></td>-->
+<!--                        <td data-label="Modifier"><a href=""><img src="img/icons8-poubelle-50.png" alt=""></a></td>-->
+                        <td data-label="Supprimer"><a th:href="@{/deleteDelegue/{id}(id=${del.id})}"><img src="img/icons8-poubelle-50.png" alt=""></a></td>
+<!--          -->
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="modal">
+        <div class="cover"></div>
+        <main>
+            <form action="/creatDelegue" method="Post" ENCTYPE="multipart/form-data">
+                <div class="contactez-nous">
+
+                    <div>
+                    <div>
+                        <label for="nomm">Votre nom</label>
+                        <input type="text" id="nomm" name="nom" placeholder="Martin" required>
+                    </div>
+                    <div>
+                        <label for="emaill">Votre e-mail</label>
+                        <input type="email" id="emaill" name="mail" placeholder="monadresse@mail.com" required>
+                    </div>
+                    <div>
+                        <label for="mat">Votre matricule</label>
+                        <input type="text" id="mat" name="matricule"  required>
+                    </div>
+                    <div>
+                        <label for="ni">Votre Niveau</label>
+
+
+
+                        <select name="niveau" id="ni">
+                            <option value="" disabled selected hidden>Choisissez votre niveau</option>
+                        <tr th:each="niv : ${niveau}" required>
+                        <option  th:value="*{niv.intitule}">[[*{niv.intitule}]]</option>
+                        </tr>
+                        </select>
+                    </div>
+
+                    <br>
+                    <div>  <label for="fi">Votre photo de profile</label>
+                        <input type="file" name="file" id="fi" > </input>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn">Save</button>
+                    </div>
+
+                </div>
+            </form>
+        </main>
+
+    </div>
+</section>
+
+
+
+</body>
+</html>

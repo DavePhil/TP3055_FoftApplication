@@ -16,25 +16,37 @@ public class Fiche {
 
     private String semestre;
     private String titre;
-    private LocalDate date;
-    private int heureDeDebut;
-    private int heureDeFin;
-    private int totalHoraire = heureDeFin - heureDeFin;
+    private String date;
+    private String heureDeDebut;
+    private String heureDeFin;
+    private String totalHoraire;
     private String contenu;
-    @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
-    private String signature;
+    private String motif;
+    @ManyToOne
+    private Niveau niveau;
+    @ManyToOne
+    private Salle salle;
+    @ManyToOne
+    private Seance seance;
+    private String signatureDelegue;
+    private String signatureEnseignant;
     private int state; // 0 en cours de validation; 1 echec; 2 validé
 
+    @ManyToOne
+    private Enseignant enseignant;
 
+    @ManyToOne
+    private Delegue delegue;
 
-
+    @ManyToOne
+    private UniteEnseignement ue;
+    @ManyToOne
+    private Specialite specialite;
 
 
     public Fiche() {
         super();
         state=0;
-        date = LocalDate.now();
     }
 
 

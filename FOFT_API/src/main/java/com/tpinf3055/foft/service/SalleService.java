@@ -30,4 +30,14 @@ public class SalleService {
         Salle saved = salleRepository.save(specialite);
         return saved;
     }
+    public Salle saveSalleToDB(String name)
+    {
+        Salle salle = new Salle();
+        salle.setNom(name);
+
+        salleRepository.save(salle);
+
+
+        return salle;
+    }
 }

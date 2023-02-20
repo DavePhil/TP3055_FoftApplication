@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles_etudiant.css">
+    <script src="js/script.js" defer></script>
+    <title>Register</title>
+</head>
+<body>
+
+
+    <div >
+        <main>
+            <form action="/CreateAdmin" method="Post" ENCTYPE="multipart/form-data">
+                <div class="contactez-nous">
+
+                    <div>
+                <div class="contactez-nous">
+                    <h1>Ajouter un Admin</h1>
+
+                    <div>
+                        <label for="nom">Votre nom</label>
+                        <input type="text" id="nom" name="nom" placeholder="Martin" required>
+                    </div>
+                    <div>
+                        <label for="emaill">Votre e-mail</label>
+                        <input type="email" id="emaill" name="mail" placeholder="monadresse@mail.com" required>
+                    </div>
+                    <div>
+                        <label for="pwd">Votre mot de passe</label>
+                        <input type="password" id="pwd" name="password"  required>
+                    </div>
+                    <div>
+                        <input type="file" name="file" id="file"> Votre photo de profil </input>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn">Save</button>
+                    </div>
+
+                </div>
+            </form>
+        </main>
+
+    </div>
+
+
+</body>
+</html>

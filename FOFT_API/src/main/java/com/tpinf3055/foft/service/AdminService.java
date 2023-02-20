@@ -4,15 +4,28 @@ import com.tpinf3055.foft.modele.Admin;
 import com.tpinf3055.foft.repository.AdminRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Optional;
 
 @Data
 @Service
 public class AdminService {
+    public Admin getByEmail;
     @Autowired
     private AdminRepository adminRepository;
+
+
 
     public Optional<Admin> getadmin(Integer id){
         return adminRepository.findById(id);
@@ -30,5 +43,28 @@ public class AdminService {
         Admin saved = adminRepository.save(admin);
         return saved;
     }
+
+
+    public Admin findAdminByEmailAndPassword(String mail, String password){
+        return adminRepository.findByEmailAndPassword(mail,password);
+    }
+
+    public void  saveAdminToDB(MultipartFile file, String name, String mail, String password) throws IOException {
+        Admin admin = new Admin();
+        final String folder = new ClassPathResource("static/PhotoD/").getFile().getAbsolutePath();
+        final String route = ServletUriComponentsBuilder.fromCurrentContextPath().path("/PhotoD/").path(file.getOriginalFilename()).toUriString();
+        byte [] bytes = file.getBytes();
+        Path path = Paths.get(folder + File.separator +file.getOriginalFilename());
+        Files.write(path,bytes);
+        System.out.println(route);
+
+        admin.setNom(name);
+        admin.setPassword(password);
+        admin.setEmail(mail);
+
+        adminRepository.save(admin);
+    }
+
+
 
 }

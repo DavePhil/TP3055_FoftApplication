@@ -1,5 +1,6 @@
 package com.tpinf3055.foft.service;
 
+
 import com.tpinf3055.foft.modele.Niveau;
 import com.tpinf3055.foft.repository.NiveauRepository;
 import lombok.Data;
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Data
 @Service
+@Data
 public class NiveauService {
+
     @Autowired
     private NiveauRepository niveauRepository;
 
@@ -23,15 +25,18 @@ public class NiveauService {
     }
 
     public void deleteNiveau (Integer id){
-        try {
-            niveauRepository.deleteById(id);
-        } catch (Exception e){
-
-        }
+        niveauRepository.deleteById(id);
     }
 
-    public Niveau saveNiveau (Niveau niveau){
+    public Niveau saveNiveau ( Niveau niveau){
         Niveau saved = niveauRepository.save(niveau);
         return saved;
     }
+    public void  CreateNiveauToDB(String code)
+    {
+        Niveau niveau=new Niveau();
+        niveau.setIntitule(code);
+        niveauRepository.save(niveau);
+    }
+
 }

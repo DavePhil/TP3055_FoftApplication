@@ -16,24 +16,15 @@ public class Enseignant {
 
     private String nom;
     private String email;
-    private String motDePasse;
-    @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    private String password;
     private String photo;
-    @OneToMany
-    @JoinColumn(name = "enseignant_id", referencedColumnName = "id")
-    private Set<UniteEnseignement> uE ;
 
-    public Enseignant(Integer id, String nom, String email, String motDePasse, Set<UniteEnseignement> uE) {
+
+    public Enseignant(){
         super();
-        this.id = id;
-        this.nom = nom;
-        this.email = email;
-        this.motDePasse = motDePasse;
-        this.uE = uE;
+        password = "1234";
     }
 
-    public Enseignant() {
-        super();
-    }
+
+
 }

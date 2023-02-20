@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles_etudiant.css">
+    <script src="js/script.js" defer></script>
+    <title>etudiant</title>
+</head>
+<body>
+<div class="side-menu">
+    <div class="brand-name">
+        <h1>Admin</h1>
+
+    </div>
+    <ul>      <ul>     <li><a href="HomePage"><img src="img/dashboard (2).png" alt="">&nbsp; <span>Dashboard</span> </a></li>
+        <li><a href="ListDelegue" class="etudiant"><img src="img/reading-book (1).png" alt="">&nbsp; <span>Etudiants</span> </a></li>
+        <li><a href="ListEnseignant"><img src="img/teacher2.png" alt="">&nbsp; <span>Enseignants</span></a></li>
+        <li><a href="ListNiveau"><img src="img/school.png" alt="">&nbsp; <span>Niveau</span> </a></li>
+        <li><a href="ListSalle"><img src="img/payment.png" alt="">&nbsp; <span>Salle</span> </a></li>
+        <li><a href="ListUE"><img src="img/help-web-button.png" alt="">&nbsp; <span>UE</span></a> </li>
+        <li><a href="ListSpecialite"><img src="img/settings.png" alt="">&nbsp; <span>Specialite</span> </a></li>
+    </ul>
+
+</div>
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="user">
+                <div class="img-case">
+                    <img src="img/user.png" alt="connexion">
+                </div>
+                <a href="/" alt=""><h3>deconnexion</h3></a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="cards">
+            <div class="card">
+                <div class="box">
+                    <h1>
+                        [[${delCount}]]
+                    </h1>
+                    <h3>Delegue</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/students.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1> [[${ensCount}]]</h1>
+                    <h3>Enseignants</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/teachers.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1>1</h1>
+                    <h3>Départements</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/schools.png" alt="">
+                </div>
+            </div>
+            <div class="card">
+                <div class="box">
+                    <h1>[[${ficheCount}]]</h1>
+                    <h3>Fiches</h3>
+                </div>
+                <div class="icon-case">
+                    <img src="img/income.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="content-2">
+            <div class="recent-payments">
+                <div class="title">
+                    <h2>Fiches</h2>
+                </div>
+                <table class="events-table">
+                    <thead>
+                    <tr>
+                        <th class="event-date">titre</th>
+                        <th class="event-date">Contenu</th>
+                        <th class="event-date">Semestre</th>
+                        <th class="event-date">Delegue</th>
+                        <th class="event-date">Enseignant</th>
+                        <th class="event-date">Unité Enseignement</th>
+                        <th class="event-date">Date</th>
+                        <th class="event-date">HeureDeDebut</th>
+                        <th class="event-date">HeureDeFin</th>
+                        <th class="event-date">Total Horaire</th>
+                        <th class="event-date">Motif</th>
+                        <th class="event-date">Niveau</th>
+                        <th class="event-date">Salle</th>
+                        <th class="event-date">Seance</th>
+                        <th class="event-date">Spécialite</th>
+
+                        <th class="event-date"> Telecharger </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="fiche : ${fiches}">
+
+                            <td data-label= "titre">[[*{fiche.titre}]]</td>
+                            <td data-label= "Contenu">[[*{fiche.contenu}]]</td>
+                            <td data-label= "Semestre">[[*{fiche.semestre}]]</td>
+                            <td data-label= "Delegue">[[*{fiche.delegue.nom}]]</td>
+                            <td data-label= "Enseignant">[[*{fiche.enseignant.nom}]]</td>
+                            <td data-label= "Unité Enseignement">[[*{fiche.ue.code}]]</td>
+                            <td data-label= "date">[[*{fiche.date}]]</td>
+                            <td data-label= "HeureDeDebut">[[*{fiche.heureDeDebut}]]</td>
+                            <td data-label= "HeureDeFin">[[*{fiche.heureDeFin}]]</td>
+                            <td data-label= "TotalHoraire">[[*{fiche.totalHoraire}]]</td>
+                            <td data-label= "Motif">[[*{fiche.motif}]]</td>
+                            <td data-label= "Niveau">[[*{fiche.niveau.intitule}]]</td>
+                            <td data-label= "Salle">[[*{fiche.salle.nom}]]</td>
+                            <td data-label= "Seance">[[*{fiche.seance.nom}]]</td>
+                            <td data-label= "Specialite">[[*{fiche.specialite.code}]]</td>
+                            <td data-label= "Télecharger"><a th:href="@{/ficheweb/{id}(id=${fiche.id})}" class="btn">Voir </a></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

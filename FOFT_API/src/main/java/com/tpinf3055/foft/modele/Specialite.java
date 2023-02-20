@@ -14,6 +14,7 @@ public class Specialite {
     private Integer id;
     private String code;
 
+
     @OneToMany
     @JoinColumn(name = "specialite_id", referencedColumnName = "id")
     private Set<UniteEnseignement> uniteEnseignements;
