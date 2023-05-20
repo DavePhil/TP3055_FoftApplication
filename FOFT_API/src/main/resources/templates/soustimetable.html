@@ -1,0 +1,25 @@
+<div class="cd-schedule-modal__event-info">
+  <div>
+
+      Heure de Debut       : [[${programme.heureDeDebut}]] <em class="cd-schedule__name"> </em>
+      Heure de Fin       : [[${programme.heureDeFin}]] <em class="cd-schedule__name"> </em>
+      Enseignant         : [[${programme.enseignant.nom}]] <em class="cd-schedule__name"> </em>
+      Salle              : [[${programme.salle.nom}]] <em class="cd-schedule__name"> </em>
+      Unite Enseignement : [[${programme.ue.code}]] <em class="cd-schedule__name"> </em>
+      Niveau             : [[${programme.ue.niveau.intitule}]]  <em class="cd-schedule__name"> </em>
+      Specialite         : [[${programme.ue.specialite.code}]] <em class="cd-schedule__name"> </em>
+      Jour               : [[${programme.jour.intitule}]] <em class="cd-schedule__name"> </em>
+
+      <div style="margin: 20px ">
+          <button  class="btn" id="pop"  >  <a th:href="@{/modif/{id}(id=${programme.id})}" style="text-decoration: none" >Modifier le programme </a> </button>
+          <button   class="btn" id="pop"> <a th:href="@{/deleteprogramme/{id}(id=${programme.id})}" style="text-decoration: none"> Supprimer un programme</a>  </button>
+      </div>
+
+  </div>
+
+</div>
+
+
+
+
+

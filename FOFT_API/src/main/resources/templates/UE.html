@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles_etudiant.css">
     <script src="js/script.js" defer></script>
+    <script src="js/script1.js" defer></script>
     <title>etudiant</title>
 </head>
 <body>
@@ -21,6 +22,7 @@
         <li><a href="ListSalle"><img src="img/payment.png" alt="">&nbsp; <span>Salle</span> </a></li>
         <li><a href="ListUE"><img src="img/help-web-button.png" alt="">&nbsp; <span>UE</span></a> </li>
         <li><a href="ListSpecialite"><img src="img/settings.png" alt="">&nbsp; <span>Specialite</span> </a></li>
+        <li><a id="pops" class="btns"><img src="img/settings.png" alt="">&nbsp; <span>Programme</span> </a></li>
     </ul>
 </div>
 <div class="container">
@@ -83,6 +85,7 @@
                         <th class="event-date">Intitule</th>
                         <th class="event-date">Niveau</th>
                         <th class="event-date">Semestre</th>
+                        <th class="event-date">Specialite</th>
                         <!--                        <th class="event-date">admin_id</th>-->
 <!--                        <th class="event-date">Modifier</th>-->
                         <th class="event-date">Supprimer</th>
@@ -97,6 +100,7 @@
                         <td data-label="Intitule">[[*{ue.code}]]</td>
                         <td data-label="Intitule">[[*{ue.niveau.intitule}]]</td>
                         <td data-label="Intitule">[[*{ue.semestre.intitule}]]</td>
+                        <td data-label="Intitule">[[*{ue.specialite.code}]]</td>
 <!--                        <td data-label="Modifier"><a href=""><img src="img/icons8-crayon-50.png" alt=""></a></td>-->
                         <td data-label="Supprimer"><a th:href="@{/deleteUE/{id}(id=${ue.id})}"><img src="img/icons8-poubelle-50.png" alt=""></a></td>
 
@@ -127,7 +131,7 @@
                     </div>
                     <div>
                         <label for="ni">Votre Niveau</label>
-                        <select name="niveau" id="ni1">
+                        <select name="niveau" id="ni1" required>
                             <option value="" disabled selected hidden>Choisissez le niveau</option>
                             <tr th:each="niv : ${niveau}" required>
                                 <option  th:value="*{niv.intitule}">[[*{niv.intitule}]]</option>
@@ -136,11 +140,18 @@
                     </div>
                     <div>
                         <label for="ni">Votre Semestre</label>
-                        <select name="semestre" id="ni2">
+                        <select name="semestre" id="ni2" required>
                             <option value="" disabled selected hidden>Choisissez le semestre</option>
                             <tr th:each="sem : ${semestre}" required>
                                 <option  th:value="*{sem.intitule}">[[*{sem.intitule}]]</option>
                             </tr>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Votre specialite </label>
+                        <select name="specialite" id="specialite" required>
+                            <option value="0" > Choisissez votre specialite </option>
+                            <option th:each="specialite : ${specialite}" th:value="${specialite.id}" th:text="${specialite.code}"></option>
                         </select>
                     </div>
 
@@ -159,6 +170,48 @@
     </div>
     </form>
     </main>
+
+    </div>
+</section>
+
+<section>
+    <div class="modals">
+        <div class="cover"></div>
+        <main>
+            <form action="/ListProgramme" method="post" ENCTYPE="multipart/form-data">
+                <div class="contactez-nous">
+                    <div>
+                        <label>Votre specialite </label>
+                        <select name="specialite" id="specialite">
+                            <option value="0" > Choisissez votre specialite </option>
+                            <option th:each="specialite : ${specialite}" th:value="${specialite.id}" th:text="${specialite.code}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ni">Votre Niveau</label>
+                        <select name="niveau" id="ni">
+                            <option value="" disabled selected hidden>Choisissez votre niveau</option>
+                            <tr th:each="niv : ${niveau}" required>
+                                <option  th:value="*{niv.id}">[[*{niv.intitule}]]</option>
+                            </tr>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ni">Votre Semestre</label>
+                        <select name="semestre" id="ni2" required>
+                            <option value="" disabled selected hidden>Choisissez le semestre</option>
+                            <tr th:each="sem : ${semestre}" required>
+                                <option  th:value="*{sem.intitule}">[[*{sem.intitule}]]</option>
+                            </tr>
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btns">Vers l'emploi de temps </button>
+                    </div>
+                </div>
+            </form>
+        </main>
 
     </div>
 </section>

@@ -34,6 +34,8 @@ public class AdminController {
     @Autowired
     private UniteEnseignementRepository uniteEnseignementRepository;
     @Autowired
+    private SemestreRepository semestreRepository;
+    @Autowired
     private FicheRepository ficheRepository;
 
     @PostMapping("/Admin")
@@ -102,6 +104,7 @@ public class AdminController {
         List<Fiche> fiches = ficheRepository.findAll();
         List<Seance> seances=seanceRepository.findAll();
         List<Specialite> specialites=specialiteRepository.findAll();
+        List<Semestre> semestres = semestreRepository.findAll();
         List<UniteEnseignement> uniteEnseignements = uniteEnseignementRepository.findAll();
         List<Enseignant> enseignants = enseignantRepository.findAll();
         long ficheCount = ficheRepository.count();
@@ -116,6 +119,7 @@ public class AdminController {
         model.addAttribute("salle", salles);
         model.addAttribute("seance", seances);
         model.addAttribute("specialite", specialites);
+        model.addAttribute("semestre", semestres);
         model.addAttribute("ue", uniteEnseignements);
         System.out.println(ficheCount);
         return "/index.html";
@@ -141,9 +145,12 @@ public class AdminController {
     @PostMapping("/CreateAdmin")
     public String saveProduct(@RequestParam("file") MultipartFile file,
                               @RequestParam("nom") String nom,
-                              @RequestParam("password") String password,
                               @RequestParam("mail") String mail) throws IOException {
-        adminService.saveAdminToDB(file,nom,mail,password);
+        if(!file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png")){
+            return "Image JPEG ou PNG requises"; // faire que ça retourne une page HTML d'érreur ; pensez à creer une méthode qui permet au chef d'ajouter sans photo
+        }else if(adminService.findByEmail(mail).isPresent() ){
+            return "L'admin existe déjà";
+        }else adminService.saveAdminToDB(file,nom,mail);
         return "redirect:/";
     }
     @GetMapping("/Register")

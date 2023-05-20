@@ -1,10 +1,9 @@
 package com.tpinf3055.foft.controller;
 
 import com.tpinf3055.foft.modele.Niveau;
-import com.tpinf3055.foft.repository.DelegueRepository;
-import com.tpinf3055.foft.repository.EnseignantRepository;
-import com.tpinf3055.foft.repository.FicheRepository;
-import com.tpinf3055.foft.repository.NiveauRepository;
+import com.tpinf3055.foft.modele.Semestre;
+import com.tpinf3055.foft.modele.Specialite;
+import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.NiveauService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,11 @@ public class NiveauController {
 
     @Autowired
     private NiveauService niveauService;
+    @Autowired
+    private  SemestreRepository semestreRepository;
+
+    @Autowired
+    SpecialiteRepository specialiteRepository;
 
     @PostMapping("/niveau")
     @ResponseBody
@@ -73,6 +77,13 @@ public class NiveauController {
         model.addAttribute("delCount", delCount);
         model.addAttribute("ensCount", ensCount);
         model.addAttribute("fichecount",fichecount);
+        List<Semestre> semestre =semestreRepository.findAll();
+        model.addAttribute("semestre", semestre);
+        List<Specialite> specialites = specialiteRepository.findAll();
+        List<Semestre> semestres = semestreRepository.findAll();
+        model.addAttribute("specialite", specialites);
+        model.addAttribute("niveau", niveaux);
+        model.addAttribute("semestre", semestres);
 
 
 //niveauService.CreateNiveauToDB(code);// PostMapping

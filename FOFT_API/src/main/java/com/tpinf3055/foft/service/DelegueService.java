@@ -2,6 +2,7 @@ package com.tpinf3055.foft.service;
 
 import com.tpinf3055.foft.modele.Delegue;
 import com.tpinf3055.foft.modele.Niveau;
+import com.tpinf3055.foft.modele.Specialite;
 import com.tpinf3055.foft.repository.DelegueRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -34,7 +37,11 @@ public class DelegueService {
         else return null;
     }
 
-    public Delegue saveDelegueToDB(MultipartFile photo, String name, String email, String matricule, Niveau niveau) throws IOException {
+    public Optional<Delegue> findByEmail(String email){
+        return delegueRepository.findByEmail(email);
+    }
+
+    public Delegue saveDelegueToDB(MultipartFile photo, String name, String email, String matricule, Niveau niveau, Specialite specialite) throws IOException {
         Delegue delegue = new Delegue();
         final String folder = new ClassPathResource("static/PhotoD/").getFile().getAbsolutePath();
         final String route = ServletUriComponentsBuilder.fromCurrentContextPath().path("/PhotoD/").path(photo.getOriginalFilename()).toUriString();
@@ -46,6 +53,7 @@ public class DelegueService {
         delegue.setPhoto("/PhotoD/"+photo.getOriginalFilename());
         delegue.setNom(name);
         delegue.setNiveau(niveau);
+        delegue.setSpecialite(specialite);
         delegue.setMatricule(matricule);
 
         delegueRepository.save(delegue);
@@ -54,8 +62,14 @@ public class DelegueService {
 
 
 
+
+
     public Iterable<Delegue> getdelegues(){
         return delegueRepository.findAll();
+    }
+
+    public List<Delegue> getBySpecialiteAndNiveau (Integer specialiteId, Integer niveauId){
+        return delegueRepository.getAllBySpecialiteAndNiveau(specialiteId,niveauId);
     }
 
     public void deleteDelegue (Integer id){
@@ -76,7 +90,8 @@ public class DelegueService {
     }
 
 
-    public void updateinformation(int id,MultipartFile photo, String name, String email, String matricule, String niveau,String password)
+
+    public void updateinformation(int id,MultipartFile photo, String name, String email, String matricule,String password)
     {
         Delegue del=new Delegue();
         del=delegueRepository.findById(id).get();

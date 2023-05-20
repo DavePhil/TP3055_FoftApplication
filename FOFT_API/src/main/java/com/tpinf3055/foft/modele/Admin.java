@@ -21,6 +21,10 @@ public class Admin {
         private String password;
         private String photo;
 
+        public Admin (){
+                super();
+                password = "1234";
+        }
 
 
         @OneToMany

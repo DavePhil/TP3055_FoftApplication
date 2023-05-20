@@ -5,13 +5,13 @@ const btnClose = document.querySelector('.modal .btn')
 const toggelModal = () => {
     modal.classList.toggle('modal-reveal')
 }
-
 btnOpen.addEventListener('click', function(){
           toggelModal()
 })
 btnClose.addEventListener('click', function(){
     toggelModal()
 })
+
 
 
 let togg2 = document.getElementById("pop2");
@@ -26,3 +26,4 @@ function togg(){
   }
 };
 togg2.onclick = togg;
+

@@ -3,6 +3,8 @@ package com.tpinf3055.foft.modele;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Set;
 @Data
@@ -15,20 +17,5 @@ public class Specialite {
     private String code;
 
 
-    @OneToMany
-    @JoinColumn(name = "specialite_id", referencedColumnName = "id")
-    private Set<UniteEnseignement> uniteEnseignements;
-
-
-    public Specialite(Integer id, String code, Set<UniteEnseignement> uniteEnseignements) {
-        super();
-        this.id = id;
-        this.code = code;
-        this.uniteEnseignements = uniteEnseignements;
-    }
-
-    public Specialite() {
-        super();
-    }
 
 }

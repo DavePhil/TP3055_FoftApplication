@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -13,40 +14,29 @@ public class Fiche {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String semestre;
     private String titre;
-    private String date;
-    private String heureDeDebut;
-    private String heureDeFin;
-    private String totalHoraire;
-    private String contenu;
+    private Date date;
+//    private String contenu;
     private String motif;
+    private String signatureDelegue;
+    private String signatureEnseignant;
     @ManyToOne
     private Niveau niveau;
     @ManyToOne
-    private Salle salle;
+    private Specialite specialite;
     @ManyToOne
     private Seance seance;
-    private String signatureDelegue;
-    private String signatureEnseignant;
-    private int state; // 0 en cours de validation; 1 echec; 2 validé
+    @ManyToOne
+    private Salle salle;
+
+    private int state; // -1 => initiés 0 => en cours de validation; 1 =>  rejetés; 2 => validés;  3 => Rattrapage
 
     @ManyToOne
-    private Enseignant enseignant;
-
-    @ManyToOne
-    private Delegue delegue;
-
-    @ManyToOne
-    private UniteEnseignement ue;
-    @ManyToOne
-    private Specialite specialite;
-
+    private Programme programme;
 
     public Fiche() {
         super();
-        state=0;
+        state=-1;
     }
 
 

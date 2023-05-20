@@ -4,6 +4,7 @@ import com.tpinf3055.foft.modele.*;
 import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.DelegueService;
 import com.tpinf3055.foft.service.FicheService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -53,38 +54,38 @@ public class FicheController {
 
 
 
-    @PostMapping("/createFiche")
-    @ResponseBody
-    public Map<String, String> createFiche (@RequestParam("signatureDelegue") MultipartFile signature,
-                                            @RequestParam("semestre")String semestre,
-                                            @RequestParam("date") String date,
-                                            @RequestParam("titre")String titre,
-                                            @RequestParam("heureDebut")String heureDebut,
-                                            @RequestParam("heureFin")String heureFin,
-                                            @RequestParam("contenu") String contenu,
-                                            @RequestParam("totalHoraire") String totalHoraire,
-                                            @RequestParam("enseignant") Enseignant enseignant,
-                                            @RequestParam("uniteEnseignement")UniteEnseignement uniteEnseignement,
-                                            @RequestParam("niveau")Niveau niveau,
-                                            @RequestParam("salle") Salle salle,
-                                            @RequestParam("specialite") Specialite specialite,
-                                            @RequestParam("delegue") Delegue delegue,
-                                            @RequestParam("seance") Seance seance
-                              ){
-
-        try {
-            System.out.println(signature.getContentType());
-            if(!signature.getContentType().equals("image/jpeg") && !signature.getContentType().equals("image/png")){
-                return Collections.singletonMap("response", "Seuls les fichiers JPEG et PNG sont acceptés");
-            }
-            ficheService.saveFicheToDB(signature,semestre,titre,heureDebut,heureFin,contenu,totalHoraire,enseignant,uniteEnseignement,niveau,salle, date,specialite,delegue,seance);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.singletonMap("response", "error");
-        }
-        String returnValue = "Fiche ajoutee avec succes" ;
-        return Collections.singletonMap("response", returnValue);
-    }
+//    @PostMapping("/createFiche")
+//    @ResponseBody
+//    public Map<String, String> createFiche (@RequestParam("signatureDelegue") MultipartFile signature,
+//                                            @RequestParam("semestre")String semestre,
+//                                            @RequestParam("date") String date,
+//                                            @RequestParam("titre")String titre,
+//                                            @RequestParam("heureDebut")String heureDebut,
+//                                            @RequestParam("heureFin")String heureFin,
+//                                            @RequestParam("contenu") String contenu,
+//                                            @RequestParam("totalHoraire") String totalHoraire,
+//                                            @RequestParam("enseignant") Enseignant enseignant,
+//                                            @RequestParam("uniteEnseignement")UniteEnseignement uniteEnseignement,
+//                                            @RequestParam("niveau")Niveau niveau,
+//                                            @RequestParam("salle") Salle salle,
+//                                            @RequestParam("specialite") Specialite specialite,
+//                                            @RequestParam("delegue") Delegue delegue,
+//                                            @RequestParam("seance") Seance seance
+//                              ){
+//
+//        try {
+//            System.out.println(signature.getContentType());
+//            if(!signature.getContentType().equals("image/jpeg") && !signature.getContentType().equals("image/png")){
+//                return Collections.singletonMap("response", "Seuls les fichiers JPEG et PNG sont acceptés");
+//            }
+//            ficheService.saveFicheToDB(signature,semestre,titre,heureDebut,heureFin,contenu,totalHoraire,enseignant,uniteEnseignement,niveau,salle, date,specialite,delegue,seance);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return Collections.singletonMap("response", "error");
+//        }
+//        String returnValue = "Fiche ajoutee avec succes" ;
+//        return Collections.singletonMap("response", returnValue);
+//    }
 
     @GetMapping("/Fiche/{id}")
     @ResponseBody
@@ -95,6 +96,12 @@ public class FicheController {
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/fiche-count/{enseignant_id}")
+    @ResponseBody
+    public int countFiche(@PathVariable("enseignant_id")Integer enseignant_id){
+        return ficheService.countFiche(enseignant_id);
     }
 
     @GetMapping("/Fiche/{id}/{state}")
@@ -175,53 +182,7 @@ public class FicheController {
          return 0;
     }
 
-    @PutMapping("/Fiche/{id}")
-    @ResponseBody
-    public Map<String, String> updateFicheReject(@PathVariable int id, @RequestBody Fiche fiche) {
-        Optional<Fiche> f = ficheService.getFiche(id);
-        if(f.isPresent()) {
-            Fiche current = f.get();
-            if(current.getState() ==2 || current.getState()==0 ){
-                current.setState(0);
-                String semestre = fiche.getSemestre();
-                if(semestre!= current.getSemestre()) current.setSemestre(semestre);
-                String titre = fiche.getTitre();
-                if(titre!= current.getTitre()) current.setTitre(titre);
-                String date = fiche.getDate();
-                if(date!= current.getDate()) current.setDate(date);
-                else current.setDate(String.valueOf(LocalDate.now()));
-                String heureDeDebut = fiche.getHeureDeDebut();
-                if(heureDeDebut!=current.getHeureDeDebut()) current.setHeureDeDebut(heureDeDebut);
-                String heureDeFin = fiche.getHeureDeFin();
-                if(heureDeFin!=current.getHeureDeFin())current.setHeureDeFin(heureDeFin);
-                 String totalHoraire = fiche.getTotalHoraire();
-                if(totalHoraire!= current.getTotalHoraire())current.setTotalHoraire(totalHoraire);
-                String contenu = fiche.getContenu();
-                if(contenu!= current.getContenu()) current.setContenu(contenu);
-                Enseignant enseignant = fiche.getEnseignant();
-                if(enseignant!=current.getEnseignant())current.setEnseignant(enseignant);
-                UniteEnseignement uniteEnseignement = fiche.getUe();
-                if(uniteEnseignement!=current.getUe())current.setUe(uniteEnseignement);
-                Niveau niveau = fiche.getNiveau();
-                if(niveau!=current.getNiveau())current.setNiveau(niveau);
-                Salle salle = fiche.getSalle();
-                if(salle!=current.getSalle())current.setSalle(salle);
-                Specialite specialite = fiche.getSpecialite();
-                if(specialite!=current.getSpecialite())current.setSpecialite(specialite);
-                Delegue delegue = fiche.getDelegue();
-                if(delegue!=current.getDelegue())current.setDelegue(delegue);
-                Seance seance = fiche.getSeance();
-                if(seance!=current.getSeance())current.setSeance(seance);
-                current.setState(0);
-                current.setMotif(null);
-                ficheService.saveFiche(current);
-                return Collections.singletonMap("response", "Fiche modifiee avec succès");
-            }
-            else return  Collections.singletonMap("response", "Seuls les fiches en attente ou en cours de validation sont acceptées");
-        } else {
-            return Collections.singletonMap("response", "Fiche absente");
-        }
-    }
+
 
     @GetMapping("/fichebyenseignant/{enseignant_id}")
     @ResponseBody
@@ -241,17 +202,15 @@ public class FicheController {
         return ficheService.findByDelegue(delegue_id);
     }
 
-    @GetMapping("/fichedelegueandstate/{delegue_id}/{state}")
+    @GetMapping("/fichedelegueandstate/{niveau_id}/{specialite_id}/{state}")
     @ResponseBody
-    public Iterable<Fiche> findByIdDelegueAndState(@PathVariable("delegue_id") Integer delegue_id, @PathVariable("state") Integer state){
-        return ficheService.findByDelegueAndState(delegue_id,state);
+    public Iterable<Fiche> findByIdDelegueAndState(@PathVariable("niveau_id") Integer niveau_id, @PathVariable("specialite_id") Integer specialite_id, @PathVariable("state") Integer state){
+        return ficheService.findByDelegueAndState(niveau_id,specialite_id,state);
     }
 
     @GetMapping("/ficheweb/{id}")
     public String  allFiches(Model model, @PathVariable("id") int id )
     {
-
-
             Fiche fiche = ficheRepository.findFicheById(id);
             List<Delegue> delegue = delegueRepository.findAll();
             List<Niveau> niveau = niveauRepository.findAll();
@@ -270,9 +229,6 @@ public class FicheController {
             model.addAttribute("specialite", specialite);
             model.addAttribute("ue", uniteEnseignement);
 
-
-
-//niveauService.CreateNiveauToDB(code);// PostMapping
         return "/fiche.html";
     }
 

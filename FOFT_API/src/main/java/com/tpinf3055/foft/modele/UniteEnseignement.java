@@ -23,6 +23,10 @@ public class UniteEnseignement {
     @ManyToOne
     @Fetch(FetchMode.JOIN)
     private Niveau niveau;
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    private Specialite specialite;
+
 //    @OneToMany(cascade = CascadeType.REMOVE)
 //    @JoinColumn(name = "UniteEnseignement_id", referencedColumnName = "id")
 //    private List<Fiche> fiche;

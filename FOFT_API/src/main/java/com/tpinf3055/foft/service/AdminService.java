@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.lang.model.element.AnnotationMirror;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,12 +45,16 @@ public class AdminService {
         return saved;
     }
 
+    public Optional<Admin> findByEmail(String email){
+        return adminRepository.findByEmail(email);
+    }
+
 
     public Admin findAdminByEmailAndPassword(String mail, String password){
         return adminRepository.findByEmailAndPassword(mail,password);
     }
 
-    public void  saveAdminToDB(MultipartFile file, String name, String mail, String password) throws IOException {
+    public void  saveAdminToDB(MultipartFile file, String name, String mail) throws IOException {
         Admin admin = new Admin();
         final String folder = new ClassPathResource("static/PhotoD/").getFile().getAbsolutePath();
         final String route = ServletUriComponentsBuilder.fromCurrentContextPath().path("/PhotoD/").path(file.getOriginalFilename()).toUriString();
@@ -59,7 +64,6 @@ public class AdminService {
         System.out.println(route);
 
         admin.setNom(name);
-        admin.setPassword(password);
         admin.setEmail(mail);
 
         adminRepository.save(admin);

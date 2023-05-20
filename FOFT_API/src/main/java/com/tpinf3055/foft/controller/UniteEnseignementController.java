@@ -2,6 +2,7 @@ package com.tpinf3055.foft.controller;
 
 import com.tpinf3055.foft.modele.Niveau;
 import com.tpinf3055.foft.modele.Semestre;
+import com.tpinf3055.foft.modele.Specialite;
 import com.tpinf3055.foft.modele.UniteEnseignement;
 import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.UniteEnseignementService;
@@ -33,6 +34,9 @@ public class UniteEnseignementController {
     private NiveauRepository niveauRepository;
     @Autowired
     private SemestreRepository semestreRepository;
+
+    @Autowired
+    private SpecialiteRepository specialiteRepository;
 
     @PostMapping("/UniteEnseignement")
     @ResponseBody
@@ -83,21 +87,6 @@ public class UniteEnseignementController {
         return  "ok";
     }
 
-    @PostMapping("/addUe")
-    public String saveProduct(@RequestParam("file") MultipartFile file,
-                              @RequestParam("code") String code,
-                              @RequestParam("specialite_id") int specialite_id,
-                              @RequestParam("niveau_id") int niveau_id,
-                              @RequestParam("salle_id") int salle_id,
-                              @RequestParam("admin_id") int admin_id)
-
-    {
-        UniteEnseignement ue=new UniteEnseignement();
-        ue.setCode(code);
-
-        uniteEnseignementService.saveUniteEnseignement(ue);
-        return "redirect:/HomePage";
-    }
 
 
 
@@ -114,6 +103,10 @@ public class UniteEnseignementController {
         model.addAttribute("semestre", semestre);
         long ensCount=enseignantRepository.count();
         long fichecount = ficheRepository.count();
+        List<Specialite> specialites = specialiteRepository.findAll();
+
+        model.addAttribute("specialite", specialites);
+        model.addAttribute("niveau", niveaux);
 
         model.addAttribute("delCount", delCount);
         model.addAttribute("ensCount", ensCount);
@@ -133,9 +126,9 @@ public class UniteEnseignementController {
 
 
     @PostMapping("/Createue")
-    public String CreateuUE(@RequestParam("code") String code, @RequestParam("niveau") Niveau niveau,@RequestParam("semestre") Semestre semestre)
+    public String CreateuUE(@RequestParam("code") String code, @RequestParam("niveau") Niveau niveau, @RequestParam("semestre") Semestre semestre, @RequestParam("specialite")Specialite specialite)
     {
-        uniteEnseignementService.CreateUEToDB(code,niveau,semestre);
+        uniteEnseignementService.CreateUEToDB(code,niveau,semestre,specialite);
         return "redirect:/ListUE";
 
     }

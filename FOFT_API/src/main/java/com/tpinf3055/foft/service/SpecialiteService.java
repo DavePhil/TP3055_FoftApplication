@@ -20,6 +20,8 @@ public class SpecialiteService {
         return specialiteRepository.findById(id);
     }
 
+    public List<Specialite> getspecialites(){return specialiteRepository.findAll();}
+
     public Iterable<Specialite> getSpecialites(){
         return specialiteRepository.findAll();
     }

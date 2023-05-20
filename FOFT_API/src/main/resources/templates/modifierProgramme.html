@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles_etudiant.css">
+  <script src="js/script.js" defer></script>
+  <title>etudiant</title>
+</head>
+<body>
+
+
+
+<section>
+  <div class="modal">
+    <div class="cover"></div>
+    <main>
+      <form th:action="@{/programmec/{id}(id=${programme.id})}" method="post" ENCTYPE="multipart/form-data">
+        <div class="contactez-nous">
+          <div>
+            <label for="heureDeDebut">  Heure De Debut: [[${programme.heureDeDebut}]] </label>
+            <input type="time" id="heureDeDebut" name="heureDeDebut" th:label="${programme.heureDeDebut}">
+          </div>
+          <div>
+            <label for="HeureDeFin">Heure De Fin: [[${programme.heureDeFin}]]</label>
+            <input type="time" id="HeureDeFin" name="heureDeFin" th:label="${programme.heureDeFin}">
+          </div>
+          <div>
+            <label for="totalHoraire">Total Horaire: [[${programme.totalHoraire}]]</label>
+            <input type="text" id="totalHoraire" name="totalHoraire" th:label="${programme.totalHoraire}">
+          </div>
+          <div>
+            <label for="enseignant">Enseignant: [[${programme.enseignant.nom}]] </label>
+            <select name="enseignant" id="enseignant">
+              <option value="" disabled selected hidden>Choisissez l'enseignant </option>
+              <option th:each="enseignant : ${enseignant}" th:value="*{enseignant.id}" th:text="*{enseignant.nom}"> </option>
+            </select>
+          </div>
+          <div>
+            <label for="ue">Unité d'enseignement: [[${programme.ue.code}]]</label>
+            <select name="ue" id="ue">
+              <option value="" disabled selected hidden>Choisissez l'unite d'enseignement</option>
+              <option th:each="ue : ${ue}" th:value="*{ue.id}" th:text="*{ue.code}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="salle">Salle: [[${programme.salle.nom}]]</label>
+            <select name="salle" id="salle">
+              <option value="" disabled selected hidden>Choisissez votre salle</option>
+              <option th:each="salle : ${salle}"  th:value="*{salle.id}" th:text="*{salle.nom}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="seance">Seance : [[${programme.seance.nom}]]</label>
+            <select name="seance" id="seance">
+              <option value="0" >Choisissez votre seance</option>
+              <option th:each="seance : ${seance}" th:value="*{seance.id}" th:text="*{seance.nom}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="jour">Jour: [[${programme.jour.intitule}]]</label>
+            <select name="jour" id="jour">
+              <option value="0">Choisissez votre jour</option>
+              <option th:each="jour : ${jour}" th:value="*{jour.id}" th:text="*{jour.intitule}"></option>
+            </select>
+          </div>
+
+          <div>
+            <button type="submit" class="btn">Save</button>
+          </div>
+
+        </div>
+      </form>
+    </main>
+
+  </div>
+</section>
+
+
+
+
+
+</body>
+</html>

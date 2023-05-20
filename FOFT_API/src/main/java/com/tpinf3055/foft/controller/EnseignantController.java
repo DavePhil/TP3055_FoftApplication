@@ -1,19 +1,24 @@
 package com.tpinf3055.foft.controller;
 
-import com.tpinf3055.foft.modele.Delegue;
-import com.tpinf3055.foft.modele.Enseignant;
-import com.tpinf3055.foft.repository.DelegueRepository;
-import com.tpinf3055.foft.repository.EnseignantRepository;
-import com.tpinf3055.foft.repository.FicheRepository;
+import com.tpinf3055.foft.modele.*;
+import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.EnseignantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +32,14 @@ public class EnseignantController {
     private DelegueRepository delegueRepository ;
     @Autowired
     private FicheRepository ficheRepository;
+
+    @Autowired
+    NiveauRepository niveauRepository;
+    @Autowired
+    SemestreRepository semestreRepository;
+
+    @Autowired
+    SpecialiteRepository specialiteRepository;
 
 
     @PostMapping("/Enseignant")
@@ -80,29 +93,31 @@ public class EnseignantController {
         enseignantService.deleteEnseignant(id);
     }
 
-    @PutMapping("/Enseignant/{id}")
+    @PutMapping("/enseignant/{id}")
     @ResponseBody
-    public Enseignant updateEmployee(@PathVariable("id") final int id, @RequestBody Enseignant enseignant) {
-        Optional<Enseignant> e = enseignantService.getEnseignant(id);
-        if(e.isPresent()) {
-            Enseignant current = e.get();
-
-            String nom = enseignant.getNom();
-            if(nom != null) {
-                current.setNom(nom);
+    public Map<String, String> updateDelegue(@PathVariable("id") int id,
+                                             @RequestParam("photo") MultipartFile photo,
+                                             @RequestParam("nom") String nom,
+                                             @RequestParam("email") String mail) throws IOException {
+        Optional<Enseignant> f = enseignantService.getEnseignant(id);
+        if(f.isPresent()) {
+            Enseignant current = f.get();
+            if (photo!=null) {
+                final String folder = new ClassPathResource("static/PhotoE/").getFile().getAbsolutePath();
+                final String route = ServletUriComponentsBuilder.fromCurrentContextPath().path("/PhotoE/").path(photo.getOriginalFilename()).toUriString();
+                byte[] bytes = photo.getBytes();
+                System.out.println(route);
+                Path path = Paths.get(folder + File.separator + photo.getOriginalFilename());
+                Files.write(path, bytes);
+                current.setPhoto("/PhotoE/"+photo.getOriginalFilename());
             }
-            String mail = enseignant.getEmail();
-            if(mail != null) {
-                current.setEmail(mail);
-            }
-            String password = enseignant.getPassword();
-            if(password != null) {
-                current.setPassword(password);;
-            }
+            if(nom!= current.getNom()) current.setNom(nom);
+            if(mail!= current.getEmail()) current.setEmail(mail);
             enseignantService.saveEnseignant(current);
-            return current;
-        } else {
-            return null;
+            return Collections.singletonMap("response", "Compte modifié avec succès");
+        }
+        else {
+            return Collections.singletonMap("response", "Compte absent");
         }
     }
 
@@ -118,6 +133,13 @@ public class EnseignantController {
         model.addAttribute("ensCount", ensCount);
         model.addAttribute("fichecount",fichecount);
         model.addAttribute("ens", ens);
+        List<Niveau> niveaux=niveauRepository.findAll();
+        List<Specialite> specialites = specialiteRepository.findAll();
+        List<Semestre> semestre =semestreRepository.findAll();
+        model.addAttribute("semestre", semestre);
+
+        model.addAttribute("specialite", specialites);
+        model.addAttribute("niveau", niveaux);
 
 
 
@@ -137,9 +159,11 @@ public class EnseignantController {
     public String  CreatEnseignant(@RequestParam("file") MultipartFile file,
                                    @RequestParam("nom") String nom,
                                    @RequestParam("mail") String mail) throws IOException {
-        enseignantService.saveEnseignantToDB(file, nom, mail);
-        // la page en question return "redirect:/listProducts.html";
-        //  return "yoyo";
+        if(!file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png")){
+            return "Image JPEG ou PNG requises"; // faire que ça retourne une page HTML d'érreur ; pensez à creer une méthode qui permet au chef d'ajouter sans photo
+        }else if(enseignantService.findByEmail(mail).isPresent() ){
+            return "L'enseignant existe déjà";
+        } else enseignantService.saveEnseignantToDB(file, nom, mail);
         return "redirect:/ListEnseignant";
     }
 }

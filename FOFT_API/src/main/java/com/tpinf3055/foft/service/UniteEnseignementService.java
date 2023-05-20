@@ -2,6 +2,7 @@ package com.tpinf3055.foft.service;
 
 import com.tpinf3055.foft.modele.Niveau;
 import com.tpinf3055.foft.modele.Semestre;
+import com.tpinf3055.foft.modele.Specialite;
 import com.tpinf3055.foft.modele.UniteEnseignement;
 import com.tpinf3055.foft.repository.UniteEnseignementRepository;
 import lombok.Data;
@@ -50,12 +51,13 @@ public class UniteEnseignementService {
     }
 
 
-    public void  CreateUEToDB(String code, Niveau niveau, Semestre semestre)
+    public void  CreateUEToDB(String code, Niveau niveau, Semestre semestre, Specialite specialite)
     {
         UniteEnseignement ue=new UniteEnseignement();
         ue.setCode(code);
         ue.setNiveau(niveau);
         ue.setSemestre(semestre);
+        ue.setSpecialite(specialite);
         uniteEnseignementRepository.save(ue);
     }
 }

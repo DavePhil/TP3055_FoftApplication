@@ -47,6 +47,10 @@ public class EnseignantService {
         return enseignant;
     }
 
+    public Optional<Enseignant> findByEmail(String email){
+        return enseignantRepository.findByEmail(email);
+    }
+
     public Optional<Enseignant> findEnseignantByEmailAndPassword(String email, String password){
         Optional<Enseignant> enseignant = enseignantRepository.findByEmailAndPassword(email, password);
         if(enseignant.isPresent()){

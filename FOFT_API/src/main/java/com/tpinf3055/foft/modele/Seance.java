@@ -15,9 +15,6 @@ public class Seance {
     private Integer id;
     private String nom;
 
-    @OneToMany
-    @JoinColumn(name = "seance_id", referencedColumnName = "id")
-    private Set<UniteEnseignement> uE ;
 
 
 

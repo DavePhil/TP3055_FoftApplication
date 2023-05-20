@@ -1,6 +1,9 @@
 package com.tpinf3055.foft.controller;
 
+import com.tpinf3055.foft.modele.Niveau;
 import com.tpinf3055.foft.modele.Salle;
+import com.tpinf3055.foft.modele.Semestre;
+import com.tpinf3055.foft.modele.Specialite;
 import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.SalleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,12 @@ public class SalleController {
 
     @Autowired
     private SalleRepository salleRepository;
+    @Autowired
+    private SemestreRepository semestreRepository;
+    @Autowired
+    SpecialiteRepository specialiteRepository;
+    @Autowired
+    NiveauRepository niveauRepository;
 
     @PostMapping("/Salle")
     @ResponseBody
@@ -63,12 +72,17 @@ public class SalleController {
         long delCount = delegueRepository.count();
         long ensCount = enseignantRepository.count();
         long ficheCount = ficheRepository.count();
-        //List<Admin> admin = adminRepository.findAll();
-        //model.addAttribute("admins", admin);
         model.addAttribute("delCount", delCount);
         model.addAttribute("ensCount", ensCount);
         model.addAttribute("sales", salles);
         model.addAttribute("fichecount",ficheCount);
+        List<Niveau> niveaux=niveauRepository.findAll();
+        List<Specialite> specialites = specialiteRepository.findAll();
+        List<Semestre> semestre =semestreRepository.findAll();
+        model.addAttribute("semestre", semestre);
+
+        model.addAttribute("specialite", specialites);
+        model.addAttribute("niveau", niveaux);
 
 
 //niveauService.CreateNiveauToDB(code);// PostMapping

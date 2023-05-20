@@ -260,7 +260,18 @@ body>section .modal>main{
     top: 20vh;
     transform: translate(-50%, -50%);
 }
-.btn{
+body>section .modals>main{
+    /* background: rgb(125, 125, 125); */
+    padding: 10px;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    z-index: 999;
+    left: 40%;
+    top: 20vh;
+    transform: translate(-50%, -50%);
+}
+.btn,.btns{
     background: #f05462;
     color: white;
     padding: 5px 10px;
@@ -272,16 +283,26 @@ body>section .modal>main{
     display: none;
     inset: 0;/* on l'utilise pour regrouper le top left rigth et bottom*/
 }
+.modals{
+    position: absolute;
+    z-index: 900;
+    display: none;
+    inset: 0;/* on l'utilise pour regrouper le top left rigth et bottom*/
+}
 .modal-reveal{
     display: block;
 }
-.cover{
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(2px);
-    /*z-index: 1000; on l'utilise unique sur un element positionné*/
+.modals-reveal{
+    display: block;
 }
+
+/*.cover{*/
+/*    position: absolute;*/
+/*    inset: 0;*/
+/*    background: rgba(255, 255, 255, 0.5);*/
+/*    !*backdrop-filter: blur(2px);*!*/
+/*    !*z-index: 1000; on l'utilise unique sur un element positionné*!*/
+/*}*/
 
 /* login */
 .contactez-nous {

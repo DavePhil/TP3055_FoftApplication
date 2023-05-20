@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link rel="stylesheet" href="css/styleE.css">
+    <link rel="stylesheet" href="css/styles_etudiant.css">
+    <script src="js/script.js" defer></script>
+    <script src="js/script1.js" defer></script>
+    <title>Emploi de temps </title>
+</head>
+<body>
+<header class="cd-main-header text-center flex flex-column flex-center">
+    <p class="margin-top-md margin-bottom-xl" style="margin-bottom: unset">👈<a href="HomePage"><img src="img/dashboard (2).png" alt="">&nbsp; <span>Dashboard</span> </a></p>
+    <h1 class="text-xl" style="margin: 10px">Emploi de temps</h1>
+    <button href="" class="btn" id="pop" > Ajouter un programme</button>
+</header>
+
+
+<div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
+    <div class="cd-schedule__timeline">
+        <ul>
+            <li><span>07:00</span></li>
+            <li><span>07:30</span></li>
+            <li><span>08:00</span></li>
+            <li><span>08:30</span></li>
+            <li><span>09:00</span></li>
+            <li><span>09:30</span></li>
+            <li><span>10:00</span></li>
+            <li><span>10:30</span></li>
+            <li><span>11:00</span></li>
+            <li><span>11:30</span></li>
+            <li><span>12:00</span></li>
+            <li><span>12:30</span></li>
+            <li><span>13:00</span></li>
+            <li><span>13:30</span></li>
+            <li><span>14:00</span></li>
+            <li><span>14:30</span></li>
+            <li><span>15:00</span></li>
+            <li><span>15:30</span></li>
+            <li><span>16:00</span></li>
+            <li><span>16:30</span></li>
+            <li><span>17:00</span></li>
+            <li><span>17:30</span></li>
+            <li><span>18:00</span></li>
+            <li><span>18:30</span></li>
+            <li><span>19:00</span></li>
+            <li><span>19:30</span></li>
+            <li><span>20:00</span></li>
+            <li><span>20:30</span></li>
+            <li><span>21:00</span></li>
+            <li><span>21:30</span></li>
+            <li><span>22:00</span></li>
+            <li><span>22:30</span></li>
+            <li><span>23:00</span></li>
+        </ul>
+    </div> <!-- .cd-schedule__timeline -->
+
+    <div class="cd-schedule__events">
+        <ul>
+            <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info" ><span>Monday</span></div>
+
+                <ul>
+                    <li class="cd-schedule__event" th:each="prog : ${programmeLun}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin} , href=@{/listprogram/{id}(id=${prog.id})}" data-content="js/soustimetable" data-event="event-1" >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="cd-schedule__group" >
+                <div class="cd-schedule__top-info" ><span>Tuesday</span></div>
+
+                <ul>
+                    <li class="cd-schedule__event" th:each="prog : ${programmeMar}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin} , href=@{/listprogram/{id}(id=${prog.id})}" data-content="js/soustimetable" data-event="event-2" >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="cd-schedule__group" >
+                <div class="cd-schedule__top-info" ><span>Wednesday</span></div>
+
+                <ul>
+                    <li class="cd-schedule__event" th:each="prog : ${programmeMer}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin}, href=@{/listprogram/{id}(id=${prog.id})}"  data-content="js/soustimetable" data-event="event-3" >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="cd-schedule__group" >
+                <div class="cd-schedule__top-info"><span>Thursday</span></div>
+
+                <ul >
+                    <li class="cd-schedule__event" th:each="prog : ${programmeJeu}" >
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin}, href=@{/listprogram/{id}(id=${prog.id})}" data-content="js/soustimetable" data-event="event-1">
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="cd-schedule__group" >
+                <div class="cd-schedule__top-info" ><span>Friday</span></div>
+
+                <ul >
+                    <li class="cd-schedule__event" th:each="prog : ${programmeVen}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin}, href=@{/listprogram/{id}(id=${prog.id})}" data-content="js/soustimetable" data-event="event-4"  >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info"><span>Saturday</span></div>
+
+                <ul >
+                    <li class="cd-schedule__event" th:each="prog : ${programmeSam}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin} , href=@{/listprogram/{id}(id=${prog.id})}" data-content="js/soustimetable" data-event="event-3" >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]] - [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="cd-schedule__group" >
+                <div class="cd-schedule__top-info"><span>Sunday</span>  </div>
+                <ul >
+                    <li class="cd-schedule__event"  th:each="prog : ${programmeDim}">
+                        <a th:attr="data-start=${prog.heureDeDebut}, data-end=${prog.heureDeFin}, href=@{/listprogram/{id}(id=${prog.id})}"  data-content="js/soustimetable" data-event="event-2"  >
+                            <em class="cd-schedule__name">[[*{prog.ue.code}]]   [[*{prog.seance.nom}]]</em>
+                            <em class="cd-schedule__name">[[*{prog.enseignant.nom}]]   [[*{prog.salle.nom}]]</em>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cd-schedule-modal">
+        <header class="cd-schedule-modal__header">
+            <div class="cd-schedule-modal__content">
+                <span class="cd-schedule-modal__date"></span>
+                <h3 class="cd-schedule-modal__name"></h3>
+            </div>
+
+            <div class="cd-schedule-modal__header-bg"></div>
+        </header>
+
+        <div class="cd-schedule-modal__body">
+            <div class="cd-schedule-modal__event-info"></div>
+            <div class="cd-schedule-modal__body-bg"></div>
+        </div>
+
+        <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
+    </div>
+
+    <div class="cd-schedule__cover-layer"></div>
+</div> <!-- .cd-schedule -->
+
+<script src="js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+<script src="js/main.js"></script>
+
+
+    <div class="modal" >
+        <div class="cover"></div>
+        <main class="margin-top-auto margin-bottom-xl">
+            <form action="/programme" method="Post" ENCTYPE="multipart/form-data" >
+                <div class="contactez-nous">
+
+                    <div>
+                        <label for="heureDeDebut">  Heure De Debut: </label>
+                        <input type="time" id="heureDeDebut" name="heureDeDebut" required>
+                    </div>
+                    <div>
+                        <label for="HeureDeFin">Heure De Fin:</label>
+                        <input type="time" id="HeureDeFin" name="heureDeFin" required>
+                    </div>
+                    <div>
+                        <label for="totalHoraire">Total Horaire:</label>
+                        <input type="text" id="totalHoraire" name="totalHoraire" required>
+                    </div>
+                    <div>
+                        <label for="enseignant">Enseignant:  </label>
+                        <select name="enseignant" id="enseignant" required>
+                            <option value="0" >Choisissez l'enseignant </option>
+                            <option th:each="enseignant : ${enseignant}" th:value="*{enseignant.id}" th:text="*{enseignant.nom}"> </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ue">Unité d'enseignement: </label>
+                        <select name="ue" id="ue" required>
+                            <option value="0" >Choisissez l'unite d'enseignement</option>
+                            <option th:each="ue : ${ue}" th:value="*{ue.id}" th:text="*{ue.code}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="salle">Salle: </label>
+                        <select name="salle" id="salle" required>
+                            <option value="0">Choisissez votre salle</option>
+                            <option th:each="salle : ${salle}"  th:value="*{salle.id}" th:text="*{salle.nom}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="seance">Seance :</label>
+                        <select name="seance" id="seance" required>
+                            <option value="0" >Choisissez votre seance</option>
+                            <option th:each="seance : ${seance}" th:value="*{seance.id}" th:text="*{seance.nom}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="jour">Jour: </label>
+                        <select name="jour" id="jour" required>
+                            <option value="0">Choisissez votre jour</option>
+                            <option th:each="jour : ${jour}" th:value="*{jour.id}" th:text="*{jour.intitule}"></option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn">Save</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+
+
+</body>
+</html>

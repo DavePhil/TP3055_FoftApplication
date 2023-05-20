@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles_etudiant.css">
     <script src="js/script.js" defer></script>
+
     <title>etudiant</title>
 </head>
 <body>
@@ -14,17 +15,20 @@
     <div class="brand-name">
         <h1>Admin</h1>
 
-    </div>
-    <ul>      <ul>     <li><a href="HomePage"><img src="img/dashboard (2).png" alt="">&nbsp; <span>Dashboard</span> </a></li>
-        <li><a href="ListDelegue" class="etudiant"><img src="img/reading-book (1).png" alt="">&nbsp; <span>Etudiants</span> </a></li>
-        <li><a href="ListEnseignant"><img src="img/teacher2.png" alt="">&nbsp; <span>Enseignants</span></a></li>
-        <li><a href="ListNiveau"><img src="img/school.png" alt="">&nbsp; <span>Niveau</span> </a></li>
-        <li><a href="ListSalle"><img src="img/payment.png" alt="">&nbsp; <span>Salle</span> </a></li>
-        <li><a href="ListUE"><img src="img/help-web-button.png" alt="">&nbsp; <span>UE</span></a> </li>
-        <li><a href="ListSpecialite"><img src="img/settings.png" alt="">&nbsp; <span>Specialite</span> </a></li>
-    </ul>
+        </div>
+        <ul>      <ul>     <li><a href="HomePage"><img src="img/dashboard (2).png" alt="">&nbsp; <span>Dashboard</span> </a></li>
+            <li><a href="ListDelegue" class="etudiant"><img src="img/reading-book (1).png" alt="">&nbsp; <span>Etudiants</span> </a></li>
+            <li><a href="ListEnseignant"><img src="img/teacher2.png" alt="">&nbsp; <span>Enseignants</span></a></li>
+            <li><a href="ListNiveau"><img src="img/school.png" alt="">&nbsp; <span>Niveau</span> </a></li>
+            <li><a href="ListSalle"><img src="img/payment.png" alt="">&nbsp; <span>Salle</span> </a></li>
+            <li><a href="ListUE"><img src="img/help-web-button.png" alt="">&nbsp; <span>UE</span></a> </li>
+            <li><a href="ListSpecialite"><img src="img/settings.png" alt="">&nbsp; <span>Specialite</span> </a></li>
+            <li>
+                <a id="pop" class="btn"><img src="img/settings.png" alt="">&nbsp; <span>Programme</span> </a>
+            </li>
+        </ul>
 
-</div>
+    </div>
 <div class="container">
     <div class="header">
         <div class="nav">
@@ -86,47 +90,32 @@
                     <thead>
                     <tr>
                         <th class="event-date">titre</th>
-                        <th class="event-date">Contenu</th>
-                        <th class="event-date">Semestre</th>
-                        <th class="event-date">Delegue</th>
+                        <th class="event-date">Date</th>
                         <th class="event-date">Enseignant</th>
                         <th class="event-date">Unité Enseignement</th>
-                        <th class="event-date">Date</th>
-                        <th class="event-date">HeureDeDebut</th>
-                        <th class="event-date">HeureDeFin</th>
-                        <th class="event-date">Total Horaire</th>
-                        <th class="event-date">Motif</th>
                         <th class="event-date">Niveau</th>
+                        <th class="event-date">specialite</th>
                         <th class="event-date">Salle</th>
                         <th class="event-date">Seance</th>
-                        <th class="event-date">Spécialite</th>
-
-                        <th class="event-date"> Telecharger </th>
+                        <th class="event-date">Supprimer</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
-                        <tr th:each="fiche : ${fiches}">
+                    <tr th:each="fiche : ${fiches}">
 
-                            <td data-label= "titre">[[*{fiche.titre}]]</td>
-                            <td data-label= "Contenu">[[*{fiche.contenu}]]</td>
-                            <td data-label= "Semestre">[[*{fiche.semestre}]]</td>
-                            <td data-label= "Delegue">[[*{fiche.delegue.nom}]]</td>
-                            <td data-label= "Enseignant">[[*{fiche.enseignant.nom}]]</td>
-                            <td data-label= "Unité Enseignement">[[*{fiche.ue.code}]]</td>
-                            <td data-label= "date">[[*{fiche.date}]]</td>
-                            <td data-label= "HeureDeDebut">[[*{fiche.heureDeDebut}]]</td>
-                            <td data-label= "HeureDeFin">[[*{fiche.heureDeFin}]]</td>
-                            <td data-label= "TotalHoraire">[[*{fiche.totalHoraire}]]</td>
-                            <td data-label= "Motif">[[*{fiche.motif}]]</td>
-                            <td data-label= "Niveau">[[*{fiche.niveau.intitule}]]</td>
-                            <td data-label= "Salle">[[*{fiche.salle.nom}]]</td>
-                            <td data-label= "Seance">[[*{fiche.seance.nom}]]</td>
-                            <td data-label= "Specialite">[[*{fiche.specialite.code}]]</td>
-                            <td data-label= "Télecharger"><a th:href="@{/ficheweb/{id}(id=${fiche.id})}" class="btn">Voir </a></td>
+                        <td data-label= "titre">[[*{fiche.titre}]]</td>
+                        <td data-label= "date">[[*{fiche.date}]]</td>
+<!--                        <td data-label= "Enseignant"> [[*{fiche.programme.enseignant.nom}]]</td>-->
+                        <td data-label= "Ue">[[*{fiche.programme.ue.code}]]</td>
+                        <td data-label= "Ue">[[*{fiche.niveau.intitule}]]</td>
+                        <td data-label= "Ue">[[*{fiche.specialite.code}]]</td>
+                        <td data-label= "Salle">[[*{fiche.salle}]]</td>
+                        <td data-label= "Seance">[[*{fiche.seance.nom}]]</td>
+                        <td data-label="Supprimer"><a th:href="@{/Fiched/{id}(id=${fiche.id})}"><img src="img/icons8-poubelle-50.png" alt=""></a></td>
 
-                        </tr>
+                    </tr>
 
                     </tbody>
                 </table>
@@ -134,6 +123,48 @@
         </div>
     </div>
 </div>
+
+<section>
+    <div class="modal">
+        <div class="cover"></div>
+        <main>
+            <form action="/ListProgramme" method="post" ENCTYPE="multipart/form-data">
+                <div class="contactez-nous">
+                    <div>
+                        <label>Votre specialite </label>
+                        <select name="specialite" id="specialite" required>
+                            <option value="0" > Choisissez votre specialite </option>
+                            <option th:each="specialite : ${specialite}" th:value="${specialite.id}" th:text="${specialite.code}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ni">Votre Niveau</label>
+                        <select name="niveau" id="ni">
+                            <option value="" disabled selected hidden>Choisissez votre niveau</option>
+                            <tr th:each="niv : ${niveau}" required>
+                                <option  th:value="*{niv.id}">[[*{niv.intitule}]]</option>
+                            </tr>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ni">Votre Semestre</label>
+                        <select name="semestre" id="ni2" required>
+                            <option value="" disabled selected hidden>Choisissez le semestre</option>
+                            <tr th:each="sem : ${semestre}" required>
+                                <option  th:value="*{sem.intitule}">[[*{sem.intitule}]]</option>
+                            </tr>
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn">Vers l'emploi de temps </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+    </div>
+</section>
 
 
 </body>

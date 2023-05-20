@@ -1,10 +1,9 @@
 package com.tpinf3055.foft.controller;
 
+import com.tpinf3055.foft.modele.Niveau;
+import com.tpinf3055.foft.modele.Semestre;
 import com.tpinf3055.foft.modele.Specialite;
-import com.tpinf3055.foft.repository.DelegueRepository;
-import com.tpinf3055.foft.repository.EnseignantRepository;
-import com.tpinf3055.foft.repository.FicheRepository;
-import com.tpinf3055.foft.repository.SpecialiteRepository;
+import com.tpinf3055.foft.repository.*;
 import com.tpinf3055.foft.service.SpecialiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,10 @@ public class SpecialiteController {
     private DelegueRepository delegueRepository;
     @Autowired
     private FicheRepository ficheRepository;
+    @Autowired
+    private NiveauRepository niveauRepository;
+    @Autowired
+    private SemestreRepository semestreRepository;
 
     @PostMapping("/Specialite")
     @ResponseBody
@@ -71,6 +74,13 @@ public class SpecialiteController {
         model.addAttribute("ensCount", ensCount);
         model.addAttribute("specialites", Specialites);
         model.addAttribute("fichecount",fichecount);
+        List<Niveau> niveaux=niveauRepository.findAll();
+        List<Specialite> specialites = specialiteRepository.findAll();
+        List<Semestre> semestre =semestreRepository.findAll();
+        model.addAttribute("semestre", semestre);
+
+        model.addAttribute("specialite", specialites);
+        model.addAttribute("niveau", niveaux);
 
 
 //niveauService.CreateNiveauToDB(code);// PostMapping
@@ -78,9 +88,8 @@ public class SpecialiteController {
 
     }
     @PostMapping("/createspecialite")
-    public String  CreatSpecialite(Model model,@RequestParam("code") String code)//,@PathVariable("id") int id)
+    public String  CreatSpecialite(@RequestParam("code") String code)
     {
-        //model.addAttribute("userid", id);
         Specialite sp=new Specialite();
         sp.setCode(code);
         specialiteService.saveSpecialite(sp);
