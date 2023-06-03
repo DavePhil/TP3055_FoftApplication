@@ -20,4 +20,6 @@ public interface UniteEnseignementRepository extends JpaRepository<UniteEnseigne
    List<UniteEnseignement> getAllBySemestreAndNiveau(@Param("id_semestre") Integer id_semestre, @Param("id_niveau") Integer id_niveau);
 
 
+
+
 }

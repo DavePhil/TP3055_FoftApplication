@@ -52,6 +52,23 @@ public class FicheController {
         return ficheService.saveFiche(fiche);
     }
 
+    @PutMapping("/Fiche/{id}/{contenu}")
+    @ResponseBody
+    public Map<String, String> modify(@PathVariable("contenu") String contenu, @PathVariable("id") int id){
+        Optional<Fiche> current = ficheService.getFiche(id);
+        String response ="";
+        if (!current.isPresent()) response = "Impossible de modifier, fiche absente";
+        else{
+            current.get().setContenu(contenu);
+            current.get().setState(0);
+            ficheService.saveFiche(current.get());
+            response = "Fiche modifiée avec Succès";
+        }
+        return Collections.singletonMap("response", response);
+    }
+
+
+
 
 
 //    @PostMapping("/createFiche")
@@ -148,9 +165,34 @@ public class FicheController {
         Optional<Fiche> f = ficheService.getFiche(id);
         if(f.isPresent()){
             if (f.get().getState()==0){
-                f.get().setState(2);
+                f.get().setState(1);
                 ficheService.saveFiche(f.get());
                 return ficheService.ajouteMotif(motif, id);
+            }
+        }
+        return 0;
+    }
+
+    @PutMapping("/addSignatureDelegue/{id}/{contenu}")
+    @ResponseBody
+    public int addSignatureDelegue (@RequestParam("signature") MultipartFile signature,
+                                       @PathVariable("id")Integer id,
+                                    @PathVariable("contenu") String contenu) throws IOException {
+        Optional<Fiche> f = ficheService.getFiche(id);
+        final String folder = new ClassPathResource("static/SignatureD/").getFile().getAbsolutePath();
+        final String route = ServletUriComponentsBuilder.fromCurrentContextPath().path("/SignatureD/").path(signature.getOriginalFilename()).toUriString();
+        byte [] bytes = signature.getBytes();
+        Path path = Paths.get(folder + File.separator + signature.getOriginalFilename());
+
+        if(f.isPresent()){
+            if(f.get().getState() == -1) {
+                System.out.println(route);
+                Files.write(path,bytes);
+                f.get().setState(0);
+                f.get().setSignatureDelegue("/SignatureD/"+signature.getOriginalFilename());
+                f.get().setContenu(contenu);
+                ficheService.saveFiche(f.get());
+                return 1;
             }
         }
         return 0;
@@ -173,7 +215,7 @@ public class FicheController {
             if(f.get().getState() == 0) {
                 System.out.println(route);
                 Files.write(path,bytes);
-                f.get().setState(1);
+                f.get().setState(2);
                 f.get().setSignatureEnseignant("/SignatureE/"+signature.getOriginalFilename());
                 ficheService.saveFiche(f.get());
                 return 1;
@@ -204,7 +246,7 @@ public class FicheController {
 
     @GetMapping("/fichedelegueandstate/{niveau_id}/{specialite_id}/{state}")
     @ResponseBody
-    public Iterable<Fiche> findByIdDelegueAndState(@PathVariable("niveau_id") Integer niveau_id, @PathVariable("specialite_id") Integer specialite_id, @PathVariable("state") Integer state){
+    public Iterable<Fiche> findByIdDelegueAndState(@PathVariable("niveau_id") Integer niveau_id, @PathVariable("specialite_id") Integer specialite_id, @PathVariable("state") int state){
         return ficheService.findByDelegueAndState(niveau_id,specialite_id,state);
     }
 

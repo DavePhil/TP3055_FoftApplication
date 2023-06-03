@@ -114,11 +114,11 @@ public class FicheService {
         return ficheRepository.findByEnseignant(id_enseignant);
     }
 
-    public List<Fiche> findByEnseignantAndState(Integer id_enseignant, Integer state){
+    public List<Fiche> findByEnseignantAndState(Integer id_enseignant, int state){
         return ficheRepository.findByEnseignantAndState(id_enseignant, state);
     }
 
-    public List<Fiche> findByDelegueAndState(Integer niveau_id, Integer specialite_id, Integer state){
+    public List<Fiche> findByDelegueAndState(Integer niveau_id, Integer specialite_id, int state){
         return ficheRepository.findByDelegueAndState(niveau_id, specialite_id, state);
     }
 

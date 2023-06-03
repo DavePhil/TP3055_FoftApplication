@@ -97,8 +97,11 @@ public class ProgrammeService {
 
     @Scheduled(cron = "0 59 23 * * ?") // Exécute tous les jours à 23 h 59 min
     public void planifierRattrapage() {
-        List<Fiche> fiches = ficheService.findByState(0);
-        for(Fiche fiche : fiches) fiche.setState(3);
+        List<Fiche> fiches = ficheService.findByState(-1);
+        for(Fiche fiche : fiches) {
+            fiche.setState(3);
+            fiche.setRattrapage(true);
+        };
     }
 //    @Scheduled(cron = "0 59 23 * * L") // Exécute le dernier jour de la semaine à 23 h 59 min
 //    public void planifierEchec() {

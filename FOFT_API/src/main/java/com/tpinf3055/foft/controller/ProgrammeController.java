@@ -68,7 +68,7 @@ public class ProgrammeController {
         programme.setHeureDeFin(heureDeFin);
         programme.setUe(uniteEnseignement);
         programme.setSeance(seance);
-         programmeService.saveProgramme(programme);
+        programmeService.saveProgramme(programme);
         return "redirect:/HomePage";
     }
 
@@ -132,7 +132,7 @@ public class ProgrammeController {
                 return "redirect:/HomePage";
     }
 
-    @GetMapping("/ListProgramme")
+    @PostMapping("/ListProgramme")
     public String  allProgramme(Model model, @RequestParam("niveau") int idNiveau, @RequestParam("specialite") int idSpecialite, @RequestParam("semestre") int semestreId )
     {
 
